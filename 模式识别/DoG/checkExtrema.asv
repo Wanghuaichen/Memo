@@ -1,0 +1,15 @@
+function [ extr ] = checkExtrema( ex1, ex2 )
+
+[x,y] = size(ex1);
+temp = zeroes(x,y);
+for i = 1:x,
+    for j = 1:y,
+        if (ex1(i,j) == ex2(i,j))
+           temp(i,j) = ex1(i,j); 
+        end
+    end
+end
+extr = temp
+
+end
+

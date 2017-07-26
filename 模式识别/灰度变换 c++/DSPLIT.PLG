@@ -1,0 +1,38 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: DSplit - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\LQ1E2D~1.PEN\LOCALS~1\Temp\RSP2.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:no /pdb:"Release/DSplit.pdb" /machine:I386 /out:"Release/DSplit.exe" 
+".\Release\Cdib.obj"
+".\Release\DialogShuangYu.obj"
+".\Release\DlgChuangkoubianhuan.obj"
+".\Release\DlgGuDingFaZhi.obj"
+".\Release\DlgZhexianbianhuan.obj"
+".\Release\DlgZhiFangTu.obj"
+".\Release\DSplit.obj"
+".\Release\DSplitDoc.obj"
+".\Release\DSplitView.obj"
+".\Release\DynSplitterWnd.obj"
+".\Release\DynSplitView2.obj"
+".\Release\HuiDuBianHuanDib.obj"
+".\Release\MainFrm.obj"
+".\Release\StdAfx.obj"
+".\Release\DSplit.res"
+]
+Creating command line "link.exe @C:\DOCUME~1\LQ1E2D~1.PEN\LOCALS~1\Temp\RSP2.tmp"
+<h3>Output Window</h3>
+Linking...
+
+
+
+<h3>Results</h3>
+DSplit.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

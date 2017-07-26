@@ -1,0 +1,15 @@
+function h = scatterMixtureF(data, z)
+
+%function h = scatterMixture(data, z)
+    colors = ['r','g','b','c','m','k','y'];
+    symbols = ['.','o','x','+','*','s','d','v','^','<','>','p','h'];
+    zTemp=z(z(:)>-1);
+    for i = min(zTemp):max(zTemp)
+        hold on;
+        format = strcat(colors(1+rem(i,numel(colors))),symbols(1+rem(3*i,numel(symbols))));
+        f(i)=scatter(data(z==i,1),data(z==i,2),format);
+        
+    end
+    legend(f,'1','2','3','4','5','6','7','8','9','10');
+    legend;
+end

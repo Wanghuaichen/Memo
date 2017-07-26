@@ -1,0 +1,18 @@
+function prob = GaussPDF(Data, Mu, Sigma)
+%
+% 根据高斯分布函数计算每组数据的概率密度 Probability Density Function (PDF)
+% 输入 -----------------------------------------------------------------
+%   o Data:  D x N ，N个D维数据
+%   o Mu:    D x 1 ，M个Gauss模型的中心初始值
+%   o Sigma: M x M ，每个Gauss模型的方差（假设每个方差矩阵都是对角阵，
+%                                   即一个数和单位矩阵的乘积）
+% Outputs ----------------------------------------------------------------
+%   o prob:  1 x N array representing the probabilities for the
+%            N datapoints.    
+[dim,N] = size(Data);%dim是N
+Data = Data' - repmat(Mu',N,1);%repmat是重复矩阵，求出了样本减均值
+if det(Sigma)<1.0e-7
+    Sigma=Sigma+1.0e-4*eye(dim);%eye主对角元素为一
+end;
+prob = sum((Data*inv(Sigma)).*Data, 2);%每行求和.*是两个矩阵对应位置的元素直接想成矩阵
+prob = exp(-0.5*prob) / sqrt((2*pi)^dim * (abs(det(Sigma))+realmin));

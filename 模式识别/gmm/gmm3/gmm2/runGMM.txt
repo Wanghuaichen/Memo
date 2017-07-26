@@ -1,0 +1,57 @@
+function [ label ] = runGMM( data )
+%UNTITLED Summary of this function goes here
+%   Detailed explanation goes here
+K=3;
+posI=zeros(size(data,1),K);%数据数*聚类个数的零矩阵
+sigma=zeros(2,2,K);%方差：2*2*K的零矩阵
+mean=zeros(2,K);%均值：2*K的矩阵
+alpha=zeros(K,1);%系数 K*1的零矩阵
+for i=1:size(alpha,1)%从1到K循环
+    sigma(:,:,i)=data(i,:)'*data(i,:);%第i个样本乘积
+end;
+for i=1:K
+    alpha(i)=1/K;%系数设置为三分之一
+end;
+
+conver=1000;%循环一千遍
+while conver~=0
+    %e-step%求后验概率，每个数据在某个高斯中的概率
+    for i=1:K
+       p(i,:)=GaussPDF(data',mean(:,i),sigma(:,:,i));%返回高斯函数，每个样本在每个高斯中的概率
+    end;
+    sumTemp=zeros(1,size(p,2));%p是1*N的，sumTemp是1*N的
+    for i=1:K
+        sumTemp=sumTemp+alpha(i)*p(i,:);%概率求和，就是公式下面那个
+    end
+    for i=1:size(p,2)%size(p,2)是N
+        for j=1:K
+            posI(i,j)=alpha(j)*p(j,i)/(sumTemp(i)+realmin);%求每个的后验概率
+        end;
+    end;
+    
+    %m-step
+    for i=1:K
+        temp=posI(:,i);%提出每个后验概率到temp
+        ni=sum(temp,1);%单个高斯后验概率求和r(i,k)对i求和
+        N=size(data,1);
+        sumTemp=zeros(2,1);
+        
+        for j=1:N
+            sumTemp=sumTemp+posI(j,i)*data(j,:)';%求单个高斯r（i,k）*xi
+        end;
+        mean(:,i)=sumTemp/ni;%这就是u，均值
+        
+        sigmaTemp=zeros(2);
+        for j=1:N
+            sigmaTemp=sigmaTemp+posI(j,i)*(data(j,:)'-mean(:,i))*(data(j,:)'-mean(:,i))';%样本减方差平方乘以r(i,k)对i求和
+        end;
+        sigma(:,:,i)=sigmaTemp/ni;%这就是单个高斯的方差
+  
+        alpha(i)=ni/N;%新的权值
+        
+    end;
+    conver=conver-1;
+end;
+[l,label]=max(posI');
+end
+

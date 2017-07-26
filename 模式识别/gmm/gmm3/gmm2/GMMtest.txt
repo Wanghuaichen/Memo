@@ -1,0 +1,13 @@
+[Y,Y_test,z,z_test,mu,ss,p] = drawGmm(100,100);
+set(gcf,'color','white');
+testAll=[Y;Y_test];
+labelAll=[z,z_test];
+title('(a)generate data from GMM');
+subplot(1,2,1);
+title('£¨a£©ground truth');
+scatterMixtureF(testAll,labelAll);
+labelGMM=runGMM(testAll);
+
+subplot(1,2,2);
+scatterMixtureF(testAll,labelGMM);
+title('£¨b£©GMM clustering');
