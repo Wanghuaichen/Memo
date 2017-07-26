@@ -1,0 +1,65 @@
+
+一、安装java环境（这里用的是java7）
+1、安装java7
+2、配置java环境变量
+	变量名：JAVA_HOME 
+	变量值：[JAVA_PATH]\Java\jdk1.7.0(JAVA_PATH为安装java的路径)
+
+	变量名：CLASSPATH 
+	变量值：.;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar;
+
+	变量名：Path 
+	变量值：%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;
+
+设置完环境变量后，得注销或重启电脑
+
+
+二、配置eclipse
+1、运行eclipse.exe,在Workspace Launcher 中设置workspace为当前项目所在的workspace路径
+
+三、配置项目
+1、运行eclipse.exe
+2、打开eclipse后，会看到2个项目，即 WorldWindJava 和WorldWindSzy。
+	WorldWindJava 为WorldWind的源码，在gov.nasa.worldwindx.examples包中能看到许多demo，可以以这些demo为例子学习worldwind的二次开发。
+	WorldWindSzy为水资源项目的工程。
+3、配置两个项目的build path
+	右键点击项目->点击properties->点击java build path->点击libraries选项卡。此时会看到很多配置错误。删掉除了JRE System Library以外的所有包。
+	点击Add External JARs按钮，讲WorldWindLib文件夹下的所有jar包都添加进来。
+	将bin目录下的dll文件复制到[JAVA_PATH]\Java\jre7\bin中
+	（两个项目都这样配置）
+4、配置地图服务器的ip地址
+	用的是WMS 地图服务协议
+	地图服务器的配置在workspace\WorldWindLib\worldwind.jar中
+	用压缩软件打开worldwind.jar
+	在config\earth中会看到mylayers8.xml mylayers9.xml ……这11个文件代表19个图层
+	将这19个文件拷贝出来，打开每个文件，修改<GetCapabilitiesURL>以及<GetMapURL>中的路径为地图服务器的路径
+        外网IP：XXXXXXXXXX
+        局域网IP：XXXXXXXXX
+5、配置数据服务器ip地址
+	打开eclipse，在WorldWindSzy项目中找到config\config.properties文件，修改szyServerURL为水资源服务器的ip地址
+			其中的客户端中的图片保存在服务器中，具体参数路径也可在该文件夹下配置。
+	
+6、运行szy.worldwind.main中的MainWindow.java
+
+四、项目文件简述
+
+1、szy.analytic包
+	JudgeWaterQuality.java 该文件是用来评价水质的，在getQualityFromSensor函数中添加相应的水质参数评估即可
+2、szy.context包
+	StaticContext.java 静态类，保存当前程序的一些全局变量如设备列表等等
+3、szy.request包
+	Device.java设备类，记录设备信息（一个设备为一个节点）
+	HttpRequest.java 用于收发http协议
+	Request.java 向服务器发送数据请求
+	Sensor.java传感器类，表示一个水质参数传感器
+4、szy.utils.treeMenu
+	基于worldwind example里的treeMenu修改 
+5、szy.worldwind.main包
+	MainWindow.java程序的main文件
+6、test包
+	用来测试（可以忽略）
+7、ui包
+	一些ui的类，包括菜单、地标、警报等
+
+
+
